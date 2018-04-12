@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import android.os.Build;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.content.ContextCompat;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
@@ -43,15 +45,18 @@ public class TestMainActivity {
     public void init(){
         activityActivityTestRule.getActivity()
                 .getSupportFragmentManager().beginTransaction();
+
     }
 
     @Test
     public void InvalidLoginTest(){
+
         onView(withId(R.id.edt_username)).perform(clearText(),typeText("karthik"));
         onView(withId(R.id.edt_password)).perform(clearText(),typeText("testing"));
+        closeSoftKeyboard();
         onView(withId(R.id.btn_login)).perform(click());
+        onView(withId(R.id.snackbar_text)).check(matches(withText("Login failed")));
 
-      //  onView(withId(R.id.cast_notification_id)).check(isDisplayed());
     }
 
 
