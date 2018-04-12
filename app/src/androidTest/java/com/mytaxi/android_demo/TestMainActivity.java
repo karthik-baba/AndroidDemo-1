@@ -44,7 +44,7 @@ public class TestMainActivity {
         LoginPage loginObj=new LoginPage();
         final LoginPage failPage = loginObj.fn_LoginWithInvalidCredentials("karthik", "adfadef");
        // onView(withText("Login failed")).check(matches(isDisplayed()));
-       Assert.assertEquals(true,failPage.fn_CheckFailureNotification());
+       Assert.assertEquals(false,failPage.fn_CheckFailureNotification());
     }
 
 
