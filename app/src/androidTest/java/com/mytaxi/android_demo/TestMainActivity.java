@@ -5,6 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import android.os.Build;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import static android.support.test.espresso.Espresso.onData;
@@ -48,8 +49,9 @@ public class TestMainActivity {
     public void InvalidLoginTest(){
         onView(withId(R.id.edt_username)).perform(clearText(),typeText("karthik"));
         onView(withId(R.id.edt_password)).perform(clearText(),typeText("testing"));
-       // onView(withId(R.id.btn_login)).perform(click());
-       // onView(withId(R.id.cast_notification_id))
+        onView(withId(R.id.btn_login)).perform(click());
+
+      //  onView(withId(R.id.cast_notification_id)).check(isDisplayed());
     }
 
 
