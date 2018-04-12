@@ -36,10 +36,9 @@ jobs:
           name: Run Tests
           command: |
             ./gradlew connectedAndroidTest
-            cp -r app/build/outputs/androidTests/* $CIRCLE_TEST_REPORTS
          
       - store_test_results:
-          path: app/build/reports/
+          path: app/build/reports/androidTests/connected
 
       - store_artifacts:
           path: app/build/outputs/
