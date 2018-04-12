@@ -38,7 +38,7 @@ jobs:
             ./gradlew connectedAndroidTest
          
       - store_test_results:
-          path: app/build/reports/androidTests/connected
+          path: app/build/outputs/androidTest-results/connected
 
       - store_artifacts:
           path: app/build/outputs/
