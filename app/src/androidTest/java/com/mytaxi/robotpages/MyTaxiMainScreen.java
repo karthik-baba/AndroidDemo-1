@@ -12,6 +12,7 @@ import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -80,7 +81,7 @@ public class MyTaxiMainScreen {
 
         onView(withText(driver))
                 .inRoot(withDecorView(not(is(mActivity.getWindow().getDecorView()))))
-                .perform(click());
+                .perform(scrollTo(),click());
         return new DriverProfileScreen();
     }
     public LoginScreen fn_LogOut()
