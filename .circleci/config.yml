@@ -66,7 +66,7 @@ jobs:
           command: mksdcard -l e 512M mysdcard26.img  
       - run:
           name: Launch emulator 2
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test1 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img
           background: true
       - run:
           name: Wait emulator
@@ -104,4 +104,3 @@ workflows:
           requires:
             - build
             - build2
-
