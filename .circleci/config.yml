@@ -1,4 +1,5 @@
-version: 2
+version: 2.0
+
 jobs:
   build:
     working_directory: ~/Android-Demo-1
@@ -38,6 +39,7 @@ jobs:
             # unlock the emulator screen
             sleep 30
             adb shell input keyevent 82   
+            
   build2:
     working_directory: ~/Android-Demo-1
     docker:
