@@ -50,10 +50,9 @@ public class LoginScreen {
      */
     public LoginScreen fn_LoginWithInvalidCredentials(String userName, String password)
     {
-        this.userName.perform(clearText(),typeText(userName));
-        this.password.perform(clearText(),typeText(password));
+        this.userName.perform(clearText(),typeText(userName),closeSoftKeyboard());
+        this.password.perform(clearText(),typeText(password),closeSoftKeyboard());
         try {
-            closeSoftKeyboard();
             sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -94,6 +93,11 @@ public class LoginScreen {
     {
         try
         {
+            try {
+                sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             this.loginFailedNotification = onView(withId(R.id.snackbar_text)).check(matches(isDisplayed()));
             return true;
         }

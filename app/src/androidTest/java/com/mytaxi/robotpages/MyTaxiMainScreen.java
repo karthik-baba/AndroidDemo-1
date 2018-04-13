@@ -41,7 +41,7 @@ public class MyTaxiMainScreen {
 
     public MyTaxiMainScreen() {
         try {
-            sleep(1000);
+            sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

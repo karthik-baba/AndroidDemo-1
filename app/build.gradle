@@ -1,4 +1,26 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+        // For Spoon snapshot, until 2.0.0 is released
+
+    }
+    dependencies {
+        classpath 'com.jaredsburrows:gradle-spoon-plugin:1.4.0'
+    }
+}
+
+repositories {
+    jcenter()
+    google()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    // For Spoon snapshot, until 2.0.0 is released
+}
+
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.jaredsburrows.spoon'
 
 android {
     compileSdkVersion 26
@@ -16,7 +38,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    spoon {
+        debug = true
+        baseOutputDir = file("$buildDir/custom-report-dir")
+        grantAllPermissions = true
+        allowNoDevices = true
+        grantAll = true
+        sequential = true
+
+
+
+    }
 }
+
+
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -37,4 +73,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT'
+    //androidTestImplementation 'com.squareup.spoon:spoon-client:1.6.4'
+    androidTestCompile 'com.jraska:falcon:2.0.1'
+    androidTestCompile 'com.jraska:falcon-spoon-compat:2.0.1'
+
 }
+

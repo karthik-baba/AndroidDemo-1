@@ -25,6 +25,7 @@ public class PermissionHelper {
             ActivityCompat.requestPermissions(activity,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
         }
     }
 

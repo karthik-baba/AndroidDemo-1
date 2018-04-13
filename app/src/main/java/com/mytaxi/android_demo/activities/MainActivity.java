@@ -1,11 +1,13 @@
 package com.mytaxi.android_demo.activities;
 
+import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -70,6 +72,7 @@ public class MainActivity extends AuthenticatedActivity
         super.onResume();
         if (!isAuthenticated()) {
             startActivity(AuthenticationActivity.createIntent(MainActivity.this));
+
         } else {
             DrawerLayout drawer = findViewById(R.id.drawer_layout);
             NavigationView nav = drawer.findViewById(R.id.nav_view);
