@@ -18,11 +18,14 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Create SD Card 1
-          command: mksdcard -l e 512M mysdcard22.img      
-      - run:
           name: Setup emulator 1
           command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-22;default;armeabi-v7a"
+          background: true
+      
+      - run:
+          name: Create SD Card 1
+          command: mksdcard -l e 512M mysdcard22.img      
+        
       - run:
           name: Launch emulator 1
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard22.img
@@ -35,7 +38,27 @@ jobs:
             # unlock the emulator screen
             sleep 30
             adb shell input keyevent 82
+     
 
+   
+  build2:
+    working_directory: ~/Android-Demo-1
+    docker:
+      - image: circleci/android:api-26-node8-alpha
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: |
+            sudo chmod +x gradlew
+            ./gradlew androidDependencies 
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+     
       - run:
           name: Setup emulator 2
           command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test1 -k "system-images;android-22;default;armeabi-v7a"          
@@ -44,7 +67,7 @@ jobs:
           command: mksdcard -l e 512M mysdcard26.img  
       - run:
           name: Launch emulator 2
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test1 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img
           background: true
       - run:
           name: Wait emulator
@@ -54,7 +77,13 @@ jobs:
             # unlock the emulator screen
             sleep 30
             adb shell input keyevent 82
-
+      
+  test:
+    working_directory: ~/Android-Demo-1
+    docker:
+      - image: circleci/android:api-26-alpha
+      - image: circleci/api-26-node8-alpha
+    steps:
       - run:
           name: Run Tests
           command: |
@@ -65,4 +94,14 @@ jobs:
 
       - store_artifacts:
           path: app/build/custom-report-dir/debug
- 
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - build2
+      - test:
+          requires:
+            - build
+            - build2
