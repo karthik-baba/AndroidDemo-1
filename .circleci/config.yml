@@ -61,38 +61,38 @@ jobs:
     working_directory: ~/Android-Demo-1
     docker:
      - image: circleci/android:api-26-alpha
-    step:
+    steps:
       - checkout
-    - restore_cache:
-        key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-    - run:
-        name: Setup emulator 2
-        command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test1 -k "system-images;android-22;default;armeabi-v7a"          
-    - run:
-        name: Create SD Card 2
-        command: mksdcard -l e 512M mysdcard26.img  
-    - run:
-        name: Launch emulator 2
-        command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test1 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img
-        background: true
-    - run:
-        name: Wait emulator
-        command: |
-          # wait for it to have booted
-          circle-android wait-for-boot
-          # unlock the emulator screen
-          sleep 30
-          adb shell input keyevent 82
-    - run:
-        name: Run Tests
-        command: |
-          ./gradlew spoonDebugAndroidTest
-       
-    - store_test_results:
-        path: app/build/outputs/androidTest-results/connected
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Setup emulator 2
+          command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test1 -k "system-images;android-22;default;armeabi-v7a"          
+      - run:
+          name: Create SD Card 2
+          command: mksdcard -l e 512M mysdcard26.img  
+      - run:
+          name: Launch emulator 2
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test1 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img
+          background: true
+      - run:
+          name: Wait emulator
+          command: |
+            # wait for it to have booted
+            circle-android wait-for-boot
+            # unlock the emulator screen
+            sleep 30
+            adb shell input keyevent 82
+      - run:
+          name: Run Tests
+          command: |
+            ./gradlew spoonDebugAndroidTest
+         
+      - store_test_results:
+          path: app/build/outputs/androidTest-results/connected
 
-    - store_artifacts:
-        path: app/build/custom-report-dir/debug
+      - store_artifacts:
+          path: app/build/custom-report-dir/debug
 
      
 
