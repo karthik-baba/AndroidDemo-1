@@ -1,6 +1,45 @@
 version: 2
 jobs:
-  build:
+  build1:
+    working_directory: ~/Android-Demo-1
+    docker:
+      - image: circleci/android:api-24-alpha
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Download Dependencies
+          command: |
+            sudo chmod +x gradlew
+            ./gradlew androidDependencies 
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+          name: Setup emulator 1
+          command: sdkmanager "system-images;android-22;default;armeabi-v7a" && echo "no" | avdmanager create avd -n Lollipop -k "system-images;android-22;default;armeabi-v7a"
+
+      - run:
+          name: Create SD Card 1
+          command: mksdcard -l e 512M Lollipop.img      
+        
+      - run:
+          name: Launch emulator 1
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd Lollipop -noaudio -no-boot-anim -no-window -accel on -sdcard Lollipop.img
+          background: true
+      - run:
+          name: Run Tests
+          command: |
+            ./gradlew spoonDebugAndroidTest
+         
+      - store_test_results:
+          path: app/build/outputs/androidTest-results/connected/Lollipop
+
+      - store_artifacts:
+          path: app/build/custom-report-dir/debug/Lollipop
+  build2:
     working_directory: ~/Android-Demo-1
     docker:
       - image: circleci/android:api-26-alpha
@@ -18,30 +57,33 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Setup emulator
-          command: sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n Nougat -k "system-images;android-24;default;armeabi-v7a"
+          name: Setup emulator 1
+          command: sdkmanager "system-images;android-23;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n MarshMellow -k "system-images;android-23;google_apis;armeabi-v7a"
+
       - run:
-          name: Create SD Card 
-          command: mksdcard -l e 512M mysdcard.img      
+          name: Create SD Card 1
+          command: mksdcard -l e 512M MarshMellow.img      
+        
       - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd Nougat -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard.img
+          name: Launch emulator 1
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd MarshMellow -noaudio -no-boot-anim -no-window -accel on -sdcard MarshMellow.img
           background: true
-      - run:
-          name: Wait emulator
-          command: |
-            # wait for it to have booted
-            circle-android wait-for-boot
-            # unlock the emulator screen
-            sleep 30
-            adb shell input keyevent 82
       - run:
           name: Run Tests
           command: |
             ./gradlew spoonDebugAndroidTest
          
       - store_test_results:
-          path: app/build/outputs/androidTest-results/connected
+          path: app/build/outputs/androidTest-results/connected/MarshMellow
 
       - store_artifacts:
-          path: app/build/custom-report-dir/debug
+          path: app/build/custom-report-dir/debug/MarshMellow
+
+
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build1
+      - build2
+ 
