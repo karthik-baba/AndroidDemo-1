@@ -19,7 +19,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Setup emulator
-          command: sdkmanager "system-images;android-26;google_apis;x86_64" && echo "no" | avdmanager create avd -n test -k "system-images;android-26;google_apis;x86_64"
+          command: sdkmanager "system-images;android-26;google_apis;x86_64" && echo "no" | avdmanager create avd -n Oreo -k "system-images;android-26;google_apis;x86_64"
       - run:
           name: Create SD Card 
           command: mksdcard -l e 512M mysdcard.img      
