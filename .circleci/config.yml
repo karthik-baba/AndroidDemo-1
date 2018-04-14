@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/Android-Demo-1
     docker:
-      - image: circleci/android:api-27-node8-alpha
+      - image: circleci/android:api-26-alpha
     steps:
       - checkout
       - restore_cache:
@@ -17,28 +17,15 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-
       - run:
-          name: Setup emulator 1
-          command: sdkmanager "system-images;android-26;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-26;default;armeabi-v7a"
-
+          name: Setup emulator
+          command: sdkmanager "system-images;android-26;google_apis;x86_64" && echo "no" | avdmanager create avd -n test -k "system-images;android-26;google_apis;x86_64"
       - run:
-          name: Create SD Card 1
-          command: mksdcard -l e 512M mysdcard22.img      
-        
+          name: Create SD Card 
+          command: mksdcard -l e 512M mysdcard.img      
       - run:
-          name: Launch emulator 1
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard22.img -port 5554
-          background: true
-      - run:
-          name: Setup emulator 2
-          command: sdkmanager "system-images;android-26;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test1 -k "system-images;android-26;default;armeabi-v7a"          
-      - run:
-          name: Create SD Card 2
-          command: mksdcard -l e 512M mysdcard26.img  
-      - run:
-          name: Launch emulator 2
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test1 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img -port 5556
+          name: Launch emulator
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd Oreo -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard.img
           background: true
       - run:
           name: Wait emulator
