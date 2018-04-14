@@ -28,7 +28,7 @@ jobs:
         
       - run:
           name: Launch emulator 1
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard22.img -port 5555
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard22.img -port 5554
           background: true
       - run:
           name: Setup emulator 2
@@ -38,7 +38,7 @@ jobs:
           command: mksdcard -l e 512M mysdcard26.img  
       - run:
           name: Launch emulator 2
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test1 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img -port 5037
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test1 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard26.img -port 5556
           background: true
       - run:
           name: Wait emulator
