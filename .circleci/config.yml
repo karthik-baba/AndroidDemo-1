@@ -30,6 +30,14 @@ jobs:
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd Lollipop -noaudio -no-boot-anim -no-window -accel on -sdcard Lollipop.img
           background: true
       - run:
+          name: Wait emulator
+          command: |
+            # wait for it to have booted
+            circle-android wait-for-boot
+            # unlock the emulator screen
+            sleep 30
+            adb shell input keyevent 82
+      - run:
           name: Run Tests
           command: |
             ./gradlew spoonDebugAndroidTest
@@ -68,6 +76,14 @@ jobs:
           name: Launch emulator 1
           command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd MarshMellow -noaudio -no-boot-anim -no-window -accel on -sdcard MarshMellow.img
           background: true
+      - run:
+          name: Wait emulator
+          command: |
+            # wait for it to have booted
+            circle-android wait-for-boot
+            # unlock the emulator screen
+            sleep 30
+            adb shell input keyevent 82
       - run:
           name: Run Tests
           command: |
