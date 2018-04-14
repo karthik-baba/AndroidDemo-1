@@ -19,13 +19,13 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Setup emulator
-          command: sdkmanager "system-images;android-26;google_apis;x86" && echo "no" | avdmanager create avd -n Oreo26 -k "system-images;android-26;google_apis;x86"
+          command: sdkmanager "system-images;android-25;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n Nougat25 -k "system-images;android-25;google_apis;armeabi-v7a"
       - run:
           name: Create SD Card 
           command: mksdcard -l e 512M mysdcard.img      
       - run:
           name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-x86 -avd Oreo26 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard.img
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-x86 -avd Nougat25 -noaudio -no-boot-anim -no-window -accel on -sdcard mysdcard.img
           background: true
       - run:
           name: Wait emulator
