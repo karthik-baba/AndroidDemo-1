@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/Android-Demo-1
     docker:
-      - image: circleci/android:api-26-alpha
+      - image: circleci/ubuntu-14.04-XXL-1327-3401d20
     steps:
       - checkout
       - restore_cache:
