@@ -39,6 +39,7 @@ public class LoginScreen {
         this.userName=onView(withId(R.id.edt_username));
         this.password=onView(withId(R.id.edt_password));
         this.loginBtn=onView(withId(R.id.btn_login));
+
     }
 
     /**
@@ -106,5 +107,39 @@ public class LoginScreen {
             return false;
         }
     }
+
+    //Getters & Setter
+    public ViewInteraction getUserName() {
+        return userName;
+    }
+
+    public void setUserName(ViewInteraction userName) {
+        this.userName = userName;
+    }
+
+    public ViewInteraction getPassword() {
+        return password;
+    }
+
+    public void setPassword(ViewInteraction password) {
+        this.password = password;
+    }
+
+    public ViewInteraction getLoginBtn() {
+        return loginBtn;
+    }
+
+    public void setLoginBtn(ViewInteraction loginBtn) {
+        this.loginBtn = loginBtn;
+    }
+
+    public ViewInteraction getLoginFailedNotification() {
+        return loginFailedNotification;
+    }
+
+    public void setLoginFailedNotification(ViewInteraction loginFailedNotification) {
+        this.loginFailedNotification = loginFailedNotification;
+    }
+
 
 }
