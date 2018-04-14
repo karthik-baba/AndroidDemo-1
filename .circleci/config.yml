@@ -19,7 +19,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Setup emulator
-          command: sdkmanager "system-images;android-24;default;arm64-v8a" && echo "no" | avdmanager create avd -n Nougat -k "system-images;android-24;default;arm64-v8a"
+          command: sdkmanager "system-images;android-24;default;armeabi-v7a" && echo "no" | avdmanager create avd -n Nougat -k "system-images;android-24;default;armeabi-v7a"
       - run:
           name: Create SD Card 
           command: mksdcard -l e 512M mysdcard.img      
