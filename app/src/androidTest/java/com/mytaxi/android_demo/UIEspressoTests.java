@@ -58,14 +58,7 @@ public class UIEspressoTests {
         //Logging in with invalid credentials
         //Added wait for synchronization purpose.
         final LoginScreen failPage = loginObj.fn_LoginWithInvalidCredentials("karthik", "adfadef");
-        try
-        {
-            sleep(2000);
-        }
-        catch(InterruptedException e)
-        {
-            e.printStackTrace();
-        }
+
 
         //Checking if the 'Login failed' notification is displayed
         //And user still stays in Login Page
