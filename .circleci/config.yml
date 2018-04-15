@@ -41,7 +41,7 @@ jobs:
             ./gradlew spoonDebugAndroidTest
          
       - store_test_results:
-          path: app/build/outputs/androidTest-results/connected
+          path: app/build/custom-report-dir/debug/junit-reports
 
       - store_artifacts:
           path: app/build/custom-report-dir/debug
