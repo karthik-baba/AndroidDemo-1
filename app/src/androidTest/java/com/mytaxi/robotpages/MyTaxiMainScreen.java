@@ -1,23 +1,23 @@
 package com.mytaxi.robotpages;
 
+import android.support.test.espresso.NoMatchingRootException;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewInteraction;
+
 import com.mytaxi.android_demo.R;
 import com.mytaxi.android_demo.activities.MainActivity;
-import com.mytaxi.robotpages.DriverProfileScreen;
 
 import static android.support.test.espresso.Espresso.onView;
-
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
+
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -37,6 +37,9 @@ public class MyTaxiMainScreen {
     private ViewInteraction logoutLink;
     private ViewInteraction menuButton;
     private ViewInteraction searchBox;
+    private ViewInteraction userNameInMyTaxiPage;
+    private ViewInteraction logo;
+    private ViewInteraction locationImgBtn;
 
 
     public MyTaxiMainScreen() {
@@ -52,12 +55,12 @@ public class MyTaxiMainScreen {
     }
 
 
-    public MyTaxiMainScreen fn_OpenMenu()
+    public MyTaxiMainScreen openSideMenu()
     {
         this.menuButton.perform(click());
         return this;
     }
-    public MyTaxiMainScreen fn_TypeDriver(String driveNameStartWith)
+    public MyTaxiMainScreen typeTextDriverName(String driveNameStartWith)
     {
         this.searchBox.perform(click());
         this.searchBox.perform(clearText(),typeTextIntoFocusedView(driveNameStartWith));
@@ -68,7 +71,7 @@ public class MyTaxiMainScreen {
         }
         return this;
     }
-    public DriverProfileScreen fn_SelectDriver(MainActivity mActivity, String driver)
+    public DriverProfileScreen selectDriver(MainActivity mActivity, String driver)
     {
         onView(withText(driver))
                 .inRoot(withDecorView(not(is(mActivity.getWindow().getDecorView()))))
@@ -84,11 +87,78 @@ public class MyTaxiMainScreen {
                 .perform(scrollTo(),click());
         return new DriverProfileScreen();
     }
-    public LoginScreen fn_LogOut()
+    public LoginScreen logOut()
     {
         this.logoutLink=onView(allOf(withText("Logout"),isDisplayed()));
         this.logoutLink.perform(click());
         return new LoginScreen();
+    }
+
+    /**
+     * Checking if the Username is enabled in the sidebar menu
+     * @param username
+     * @return true if the username is present, false if the username is not
+     *
+     */
+    public boolean verifyUserInfo(String username)
+    {
+        try
+        {
+            this.userNameInMyTaxiPage=onView(allOf(withId(R.id.nav_username),isDisplayed()));
+            this.userNameInMyTaxiPage.check(matches(isEnabled()));
+            return true;
+        }
+        catch(NoMatchingViewException |NoMatchingRootException e)
+        {
+            return false;
+        }
+        catch(AssertionError e)
+        {
+            return false;
+        }
+
+    }
+    /**
+     * Checking if the logo is enabled in the sidebar menu
+     * @return true if the logo is present, false if the logo is not
+     *
+     */
+    public boolean isLogoDisplayed()
+    {
+        try
+        {
+            this.logo=onView(allOf(withId(R.id.imageView),isDisplayed()));
+            this.logo.check(matches(isEnabled()));
+            return true;
+        }
+
+        catch(AssertionError | NoMatchingViewException |NoMatchingRootException e)
+        {
+            return false;
+        }
+
+
+    }
+
+    /**
+     * Checking if location button in myTaxi screen is clickable and enabled
+     * @return
+     */
+    public boolean isLocationImgDisplayed()
+    {
+        try
+        {
+            this.locationImgBtn=onView(allOf(withId(R.id.fab),isDisplayed()));
+            this.locationImgBtn.check(matches(isEnabled()));
+            this.locationImgBtn.check(matches(isClickable()));
+            return true;
+        }
+
+        catch(AssertionError | NoMatchingViewException |NoMatchingRootException e)
+        {
+            return false;
+        }
+
     }
 
 }
