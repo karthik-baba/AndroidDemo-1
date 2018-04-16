@@ -2,7 +2,7 @@ package com.mytaxi.android_demo;
 
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import static android.support.test.espresso.action.ViewActions.pressBack;
+
 import com.jraska.falcon.FalconSpoonRule;
 import com.mytaxi.android_demo.activities.MainActivity;
 import com.mytaxi.robotpages.DriverProfileScreen;
@@ -68,12 +68,16 @@ public class UIEspressoTests {
         final LoginScreen failPage4 = loginObj.fn_LoginWithInvalidCredentials("", "");
         Assert.assertEquals(true, failPage4.fn_CheckFailureNotification());
         ScreenCapture.fn_shotWithoutWait(falconSpoonRule,activityActivityTestRule.getActivity(),"Login_failed_message_displayed");
-
-
-
-
     }
 
+    /**
+     * Actual QA task
+     * Tests a valid login scenario
+     * Navigates to Main screen
+     * Search for "Sa"
+     * Select "Sarah Friedrich" driver
+     * In Driver Profile Screen, tap call button
+     */
     @Test
     public void Test02_ValidLoginTest() {
         LoginScreen loginObj = new LoginScreen();
@@ -124,6 +128,10 @@ public class UIEspressoTests {
 
     }
 
+    /**
+     * Check if the app logo is displayed in the sidebar
+     * Check if the username is displayed in the sidebar
+     */
     @Test
     public void Test04_CheckUserInfoAndLogo()
     {
@@ -151,6 +159,9 @@ public class UIEspressoTests {
         Assert.assertEquals(true,checkLogo);
     }
 
+    /**
+     * Check if the location button is displayed in the main screen
+     */
     @Test
     public void Test05_CheckLocationBtn()
     {
@@ -175,6 +186,9 @@ public class UIEspressoTests {
 
     }
 
+    /**
+     * Check the UI elements of Driver Profile page
+     */
     @Test
     public void Test06_CheckUIDriverProfilePage()
     {

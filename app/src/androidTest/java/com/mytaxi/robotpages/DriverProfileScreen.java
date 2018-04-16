@@ -7,14 +7,9 @@ import android.support.test.espresso.ViewInteraction;
 import com.mytaxi.android_demo.R;
 
 import static android.support.test.espresso.Espresso.onView;
-
 import static android.support.test.espresso.Espresso.pressBack;
-import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -30,7 +25,9 @@ public class DriverProfileScreen {
     private ViewInteraction imgDriverLocation;
     private ViewInteraction imgDriverDate;
 
-
+    /**
+     * Instantiate the Driver Profile Screen object and identify the object on screen
+     */
     public DriverProfileScreen()
     {
         this.header=onView(allOf(withText("Driver Profile"),isDisplayed()));
@@ -39,6 +36,12 @@ public class DriverProfileScreen {
 
 
     }
+
+    /**
+     * Verify the driver name displayed in the Driver Profile Screen
+     * @param driverName
+     * @return
+     */
     public boolean verifyDriverName(String driverName)
     {
         try
@@ -51,6 +54,12 @@ public class DriverProfileScreen {
             return false;
         }
     }
+
+    /**
+     * Tapping the back button from Driver Profile Screen
+     * and returning to MyTaxi Landing screen
+     * @return
+     */
     public MyTaxiMainScreen tapBackButton()
     {
         pressBack();
@@ -63,6 +72,9 @@ public class DriverProfileScreen {
 
     }
 
+    /**
+     * Tapping the call button on the Driver Profile Screen
+     */
     public void tapCallButton()
     {
         this.callBtn.perform(click());
@@ -73,6 +85,10 @@ public class DriverProfileScreen {
         }
     }
 
+    /**
+     * Returns True if the Driver image is displayed in the Driver Profile Screen
+     * @return
+     */
     public boolean isDriverAvatarImageDisplayed()
     {
         try
@@ -88,6 +104,10 @@ public class DriverProfileScreen {
         }
     }
 
+    /**
+     * Returns True if the driver location icon is displayed in the Driver Profile Screen
+     * @return
+     */
     public boolean isDriverLocationImageDisplayed()
     {
         try
@@ -103,6 +123,10 @@ public class DriverProfileScreen {
         }
     }
 
+    /**
+     * Returns True if the driver date icon is displayed in the Driver Profile screen
+     * @return
+     */
     public boolean isDriverDateImageDisplayed()
     {
         try
@@ -118,6 +142,10 @@ public class DriverProfileScreen {
         }
     }
 
+    /**
+     * Returns true if the Call Button in the Driver Profile screen is enabled
+     * @return
+     */
     public boolean isCallButtonEnabled()
     {
         try

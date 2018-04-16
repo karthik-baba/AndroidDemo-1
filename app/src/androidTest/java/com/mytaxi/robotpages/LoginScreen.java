@@ -1,11 +1,11 @@
 package com.mytaxi.robotpages;
+
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewInteraction;
 
 import com.mytaxi.android_demo.R;
 
 import static android.support.test.espresso.Espresso.onView;
-
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -13,7 +13,6 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.lang.Thread.sleep;
 
 /**
@@ -106,39 +105,6 @@ public class LoginScreen {
         {
             return false;
         }
-    }
-
-    //Getters & Setter
-    public ViewInteraction getUserName() {
-        return userName;
-    }
-
-    public void setUserName(ViewInteraction userName) {
-        this.userName = userName;
-    }
-
-    public ViewInteraction getPassword() {
-        return password;
-    }
-
-    public void setPassword(ViewInteraction password) {
-        this.password = password;
-    }
-
-    public ViewInteraction getLoginBtn() {
-        return loginBtn;
-    }
-
-    public void setLoginBtn(ViewInteraction loginBtn) {
-        this.loginBtn = loginBtn;
-    }
-
-    public ViewInteraction getLoginFailedNotification() {
-        return loginFailedNotification;
-    }
-
-    public void setLoginFailedNotification(ViewInteraction loginFailedNotification) {
-        this.loginFailedNotification = loginFailedNotification;
     }
 
 

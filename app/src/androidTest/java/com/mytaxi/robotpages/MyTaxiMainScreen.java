@@ -54,12 +54,21 @@ public class MyTaxiMainScreen {
 
     }
 
-
+    /**
+     * Opens the side menu from Main Screen
+     * @return
+     */
     public MyTaxiMainScreen openSideMenu()
     {
         this.menuButton.perform(click());
         return this;
     }
+
+    /**
+     * Type the driver name to search in the Search Text Box
+     * @param driveNameStartWith
+     * @return
+     */
     public MyTaxiMainScreen typeTextDriverName(String driveNameStartWith)
     {
         this.searchBox.perform(click());
@@ -71,6 +80,13 @@ public class MyTaxiMainScreen {
         }
         return this;
     }
+
+    /**
+     * Selects a driver from the search options
+     * @param mActivity
+     * @param driver
+     * @return
+     */
     public DriverProfileScreen selectDriver(MainActivity mActivity, String driver)
     {
         onView(withText(driver))
@@ -87,6 +103,11 @@ public class MyTaxiMainScreen {
                 .perform(scrollTo(),click());
         return new DriverProfileScreen();
     }
+
+    /**
+     * Logout from the app
+     * @return
+     */
     public LoginScreen logOut()
     {
         this.logoutLink=onView(allOf(withText("Logout"),isDisplayed()));
